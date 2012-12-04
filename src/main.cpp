@@ -1,12 +1,12 @@
-#include "ofMain.h"
-#include "cvEyeTracker.h"
+#include "testApp.h"
 #include "ofAppGlutWindow.h"
 
-//========================================================================
-int main( ){
+//--------------------------------------------------------------
+int main(){
+	ofAppGlutWindow window; // create a window
     
-    ofAppGlutWindow window;
-	ofSetupOpenGL(&window, 1680, 1000, OF_WINDOW);
-	ofRunApp( new cvEyeTracker() );
-
+    window.setGlutDisplayString("rgba double samples>=4");
+	// set width, height, mode (OF_WINDOW or OF_FULLSCREEN)
+	ofSetupOpenGL(&window, 1024, 768, OF_FULLSCREEN);
+	ofRunApp(new testApp()); // start the app
 }
