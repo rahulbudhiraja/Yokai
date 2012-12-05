@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxAssimpModelLoader.h"
 
 class testApp : public ofBaseApp{
 	public:
@@ -64,5 +65,10 @@ class testApp : public ofBaseApp{
 
 
         ///// 3D model loading ...
+    
+        ofxAssimpModelLoader Model;
+    
+        ofTexture tex;
+        ofMaterial Material;
 
 };

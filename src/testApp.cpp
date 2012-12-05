@@ -4,6 +4,8 @@
 void testApp::setup()
 {
     ofBackground(0,0,0);
+    ofSetLogLevel(OF_LOG_VERBOSE);
+
     
     universalScale.x=universalScale.y=1;
     sceneNumber=1;
@@ -12,7 +14,20 @@ void testApp::setup()
     
     river_thickness=1.3;
     
-   
+    ofDisableArbTex();
+    
+    
+    glEnable (GL_DEPTH_TEST);
+	glShadeModel (GL_SMOOTH);
+    
+	glColorMaterial (GL_FRONT_AND_BACK, GL_DIFFUSE);
+	glEnable (GL_COLOR_MATERIAL);
+    
+    Model.loadModel("cone2.dae");
+   // Model.setRotation(0, 40,2, 1, 0);
+    
+    tex = Model.getTextureForMesh(0);
+    Material = Model.getMaterialForMesh(0);
     
     
 }
@@ -102,6 +117,8 @@ void testApp::loadScene()
 {
     if(sceneNumber==1)
         scene1();
+    else if(sceneNumber==4)
+        scene4();
     else if(sceneNumber==7)
         scene7();
    
@@ -126,6 +143,8 @@ void testApp::scene1()
 
 void testApp::scene7()
 {
+    //River Flowing ..
+    
     static int i=0;
     
     ofBackground(0,0,0);
@@ -133,6 +152,7 @@ void testApp::scene7()
     ofSetColor(255,255,255);
     ofEnableSmoothing();
     //ofFill();
+
     ofCircle(ofGetWidth()/2, ofGetHeight()/2, ofGetHeight()/2);
     drawCircle();
     
@@ -174,6 +194,57 @@ void testApp::scene7()
     
 
 }
+
+void testApp::scene4()
+{
+    
+    // Mountain
+    
+    
+    static int i=0;
+    
+    ofBackground(0,0,0);
+    
+    ofSetColor(255,255,255);
+    
+    //ofEnableSmoothing();
+    //ofFill();
+    ofCircle(ofGetWidth()/2, ofGetHeight()/2, ofGetHeight()/2);
+    drawCircle();
+    
+    
+    
+    // setting up some random parameters ..
+    
+    ofNoFill();
+  
+    ofDisableArbTex();
+    
+    
+    glEnable (GL_DEPTH_TEST);
+	glShadeModel (GL_SMOOTH);
+    
+	glColorMaterial (GL_FRONT_AND_BACK, GL_DIFFUSE);
+	glEnable (GL_COLOR_MATERIAL);
+    
+    
+    // setting up some position..right now in the centre of the screen
+    Model.setPosition(ofGetWidth()/2, ofGetHeight()/2,0);
+    
+    
+    
+    
+    tex.bind();
+    Material.begin();
+    Model.drawFaces();
+    Material.end();
+    tex.unbind();
+    
+    
+    //ofEnableArbTex();
+    
+}
+
 void testApp::loadandConvertTexture()
 {
  
