@@ -47,8 +47,10 @@ class testApp : public ofBaseApp{
         vector <ofPoint> NormCirclePts;
         vector <ofPoint> NormCircleCoords;
     
-        void loadandConvertTexture();
+        void loadandConvertTexture(string image);
         void drawCircle();
+    
+        void customDrawCircle(float circle);
 
         // River Thickness ..
 

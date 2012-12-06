@@ -10,7 +10,7 @@ void testApp::setup()
     universalScale.x=universalScale.y=1;
     sceneNumber=1;
     
-    loadandConvertTexture();
+    loadandConvertTexture("mapimage.png");
     
     river_thickness=1.3;
     
@@ -119,9 +119,12 @@ void testApp::loadScene()
         scene1();
     else if(sceneNumber==4)
         scene4();
+    else if(sceneNumber==5)
+        scene5();
     else if(sceneNumber==7)
         scene7();
-   
+    else if(sceneNumber==10)
+        scene10();
 }
 
 void testApp::scene1()
@@ -245,10 +248,81 @@ void testApp::scene4()
     
 }
 
-void testApp::loadandConvertTexture()
+void testApp::scene5()
+{
+    static float i=0; //V.Important controls the Radius of the Circle ....
+    
+    
+    // Scaling Circle ..
+    
+    ofEnableAlphaBlending();
+    
+    ofBackground(0,0,0);
+    
+    ofSetColor(255,255,255);
+    
+    ofFill();
+    
+    ofSetColor(139,131,120);
+    
+    ofCircle(ofGetWidth()/2, ofGetHeight()/2, ofGetHeight()/2);
+    
+    ofSetColor(255,255,255);
+    
+    //ofScale(i,i);
+   
+    //ofTranslate(ofGetWidth()/2-i, ofGetHeight()/2-i);
+    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
+    ofNoFill();
+    
+    
+    customDrawCircle(i);
+    
+    
+    
+    ofDisableAlphaBlending();
+    if(i<0.75)
+     i+=0.0005; //Parameter to control speed of Scaling The Circle ...
+    
+}
+
+void testApp::scene10()
+{
+    // Soil Profile ..
+    
+    
+    static int i=0;
+    
+    ofEnableAlphaBlending();
+    
+    ofBackground(0,0,0);
+    
+    ofSetColor(255,255,255);
+    
+    ofFill();
+    ofSetColor(139,131,120);
+    
+    ofCircle(ofGetWidth()/2, ofGetHeight()/2, ofGetHeight()/2);
+   
+    ofSetColor(255,255,255);
+    ofTranslate(ofGetWidth()/4, ofGetHeight()/4);
+    
+    ofNoFill();
+    
+    ofScale(0.5,0.5);
+   
+    drawCircle();
+    
+    ofDisableAlphaBlending();
+    
+    //ofTranslate(ofGetWidth()/2,ofGetHeight()/2);
+    //ofCircle(ofGetWidth()/2,ofGetHeight()/2,ofGetHeight()/2-100);
+
+}
+void testApp::loadandConvertTexture(string imagepath)
 {
  
-    sqImg.loadImage("mapimage.png");  // LOAD THE FILES HERE 
+    sqImg.loadImage(imagepath);  // LOAD THE FILES HERE
     circleTexture.allocate(sqImg.width, sqImg.height, GL_RGB);
     circleTexture.loadData(sqImg.getPixels(), sqImg.width, sqImg.height, GL_RGB);
     
@@ -286,7 +360,7 @@ void testApp::drawCircle()
 
     // Draw A texture as a circle ...
     
-    
+
     
     circleTexture.bind();
     
@@ -306,7 +380,24 @@ void testApp::drawCircle()
 }
 
 
-////// 
+//////
+
+void testApp::customDrawCircle(float scale)
+{
+    circleTexture.bind();
+    
+    glBegin(GL_POLYGON);
+    for(int i = 0; i < NormCirclePts.size(); i++){
+        glTexCoord2f(NormCircleCoords[i].x, NormCircleCoords[i].y);
+        glVertex2f( NormCirclePts[i].x *scale* ofGetHeight()/2, scale* NormCirclePts[i].y * ofGetHeight()/2);
+    }
+    glEnd();
+    
+    circleTexture.unbind();
+    
+    
+    
+}
 
 
 
